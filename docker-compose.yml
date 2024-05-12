@@ -1,0 +1,42 @@
+version: "3.9"
+
+services:
+
+  postgres:
+    image: postgres:16.0
+    container_name: "postgres"
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 30s
+      timeout: 30s
+      retries: 3
+    restart: on-failure
+    stdin_open: true
+    tty: true
+    environment:
+      - POSTGRES_DB=health
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=admin
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  pgAdmin:
+    image: dpage/pgadmin4:7.7
+    container_name: "pgAdmin"
+    ports:
+      - "5050:80"
+    depends_on:
+      - postgres
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@iscae.mr
+      - PGADMIN_DEFAULT_PASSWORD=admin
+    volumes:
+      - "pgAdmin-data:/var/lib/pgadmin"
+      - "./servers.json:/pgadmin4/servers.json"
+    user: root
+
+volumes:
+  postgres-data:
+  pgAdmin-data:
