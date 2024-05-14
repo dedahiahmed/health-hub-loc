@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>health.hub</groupId>
@@ -13,7 +14,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <version.payara>6.2023.2</version.payara>
     </properties>
-    
+
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -37,11 +38,11 @@
             <artifactId>jakarta.enterprise.concurrent-api</artifactId>
             <scope>provided</scope>
         </dependency>
-                <dependency>
-                    <groupId>org.postgresql</groupId>
-                    <artifactId>postgresql</artifactId>
-                    <version>42.7.3</version>
-                </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.7.3</version>
+        </dependency>
         <dependency>
             <groupId>jakarta.persistence</groupId>
             <artifactId>jakarta.persistence-api</artifactId>
@@ -58,6 +59,14 @@
             <version>1.18.32</version>
             <scope>provided</scope>
         </dependency>
+      
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-spatial</artifactId>
+            <version>6.5.0.Final</version>
+            <type>pom</type>
+        </dependency>
+
         <dependency>
             <groupId>jakarta.resource</groupId>
             <artifactId>jakarta.resource-api</artifactId>
@@ -111,7 +120,7 @@
             </plugin>
         </plugins>
     </build>
-    
+
     <repositories>
         <repository>
             <id>payara-nexus-artifacts</id>
