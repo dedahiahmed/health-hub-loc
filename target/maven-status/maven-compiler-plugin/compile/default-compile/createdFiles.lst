@@ -1,7 +1,13 @@
+health\hub\responses\PharmacyResponse$PharmacyResponseBuilder.class
+health\hub\responses\PharmacyResponse.class
+health\hub\requests\PharmacyRequest$PharmacyRequestBuilder.class
+health\hub\requests\PharmacyRequest.class
+health\hub\controllers\UserController.class
 Config.class
 health\hub\services\UserService.class
+health\hub\services\PharmacyService.class
 health\hub\entities\User.class
+health\hub\controllers\PharmacyController.class
 health\hub\entities\Role.class
 health\hub\entities\User$UserBuilder.class
-health\hub\controllers\UserController.class
 health\hub\repositories\UserRepository.class

@@ -20,7 +20,7 @@ public class Pharmacy {
 
     private String name;
 
-  
+    @Column(name = "location", columnDefinition = "geometry(Point,4326)", nullable = false, unique = true)
     private Point location;
 
     @Column(name = "is_open_tonight")
