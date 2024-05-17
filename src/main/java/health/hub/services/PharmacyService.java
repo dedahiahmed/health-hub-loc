@@ -39,7 +39,18 @@ public class PharmacyService {
 
 
     public String addPharmacy(PharmacyRequest request) {
-        pharmacyRepository.add(request); // This assumes that the add method in the repository returns a success message String
+        // Check if a pharmacy already exists at the provided location
+        if (pharmacyRepository.existsByLocation(request.getLongitude(), request.getLatitude())) {
+            throw new IllegalArgumentException("A pharmacy already exists at the provided location");
+        }
+
+        // Check if a pharmacy with the same name already exists
+        if (pharmacyRepository.existsByName(request.getName())) {
+            throw new IllegalArgumentException("A pharmacy with the same name already exists");
+        }
+
+        // If the pharmacy doesn't exist, proceed with adding it
+        pharmacyRepository.add(request);
 
         // Return a success message
         return "Pharmacy added successfully";

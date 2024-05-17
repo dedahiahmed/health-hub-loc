@@ -17,10 +17,10 @@ public class Pharmacy {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @Column(unique = true, nullable = false)
     private String name;
 
-    @Column(name = "location", columnDefinition = "geometry(Point,4326)", nullable = false, unique = true)
+    @Column(unique = true, name = "location", columnDefinition = "geometry(Point,4326)", nullable = false)
     private Point location;
 
     @Column(name = "is_open_tonight")

@@ -7,6 +7,7 @@ Config.class
 health\hub\services\UserService.class
 health\hub\services\PharmacyService.class
 health\hub\entities\User.class
+health\hub\exceptions\GlobalExceptionHandler.class
 health\hub\controllers\PharmacyController.class
 health\hub\entities\Role.class
 health\hub\entities\User$UserBuilder.class

@@ -5,6 +5,7 @@ import health.hub.responses.PharmacyResponse;
 import health.hub.services.PharmacyService;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
 import java.util.List;
 
@@ -27,8 +28,13 @@ public class PharmacyController {
     }
 
     @POST
-    public String addPharmacy(PharmacyRequest request) {
-        return pharmacyService.addPharmacy(request);
+    public Response addPharmacy(PharmacyRequest request) {
+        try {
+            pharmacyService.addPharmacy(request);
+            return Response.ok("Pharmacy added successfully").build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+        }
     }
 
 

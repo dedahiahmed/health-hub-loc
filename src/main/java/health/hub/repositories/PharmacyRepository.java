@@ -1,15 +1,10 @@
 package health.hub.repositories;
 
-import health.hub.entities.Pharmacy;
 import health.hub.requests.PharmacyRequest;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import jakarta.persistence.Query;
-import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.jts.geom.GeometryFactory;
-import org.locationtech.jts.geom.Point;
-import org.locationtech.jts.geom.PrecisionModel;
 
 import java.util.List;
 
@@ -28,29 +23,25 @@ public class PharmacyRepository {
         try {
             entityManager.getTransaction().begin();
 
-            // Print the request
-            System.out.println("Received Pharmacy Request: " + request);
 
-            // Create a Coordinate object using longitude and latitude
-            Coordinate coordinate = new Coordinate(request.getLongitude(), request.getLatitude());
+            // Build the SQL query with parameters
+            String sql = "INSERT INTO pharmacy (name, location, is_open_tonight) " +
+                    "VALUES (?, ST_SetSRID(ST_MakePoint(?, ?), 4326), ?)";
 
-            // Create a Point geometry using the Coordinate
-            GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(), 4326); // 4326 is the SRID for WGS 84
-            Point location = geometryFactory.createPoint(coordinate);
+            // Create a native SQL query
+            Query query = entityManager.createNativeQuery(sql);
 
+            // Set parameters
+            query.setParameter(1, request.getName());
+            query.setParameter(2, request.getLongitude());
+            query.setParameter(3, request.getLatitude());
+            query.setParameter(4, request.isOpenTonight());
 
-            // Build the pharmacy entity using the builder pattern
-            Pharmacy pharmacy = Pharmacy.builder()
-                    .name(request.getName())
-                    .location(location)
-                    .isOpenTonight(request.isOpenTonight())
-                    .build();
+            // Execute the query
+            query.executeUpdate();
 
-            // Persist the pharmacy entity
-            entityManager.persist(pharmacy);
             entityManager.getTransaction().commit();
 
-            // Return a success message
             return "Pharmacy added successfully";
         } catch (Exception e) {
             entityManager.getTransaction().rollback();
@@ -58,6 +49,24 @@ public class PharmacyRepository {
         } finally {
             entityManager.close();
         }
+    }
+
+    public boolean existsByLocation(double longitude, double latitude) {
+        String sql = "SELECT COUNT(*) FROM pharmacy WHERE ST_X(location) = ? AND ST_Y(location) = ?";
+        Query query = entityManager.createNativeQuery(sql);
+        query.setParameter(1, longitude);
+        query.setParameter(2, latitude);
+        Number count = (Number) query.getSingleResult();
+        return count.intValue() != 0;
+    }
+
+    
+    public boolean existsByName(String name) {
+        String jpql = "SELECT COUNT(p) FROM Pharmacy p WHERE p.name = :name";
+        Query query = entityManager.createQuery(jpql);
+        query.setParameter("name", name);
+        Long count = (Long) query.getSingleResult();
+        return count != 0;
     }
 
 
