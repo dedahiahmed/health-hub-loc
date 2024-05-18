@@ -3,6 +3,7 @@ package health.hub.controllers;
 import health.hub.requests.PharmacyRequest;
 import health.hub.responses.PharmacyResponse;
 import health.hub.services.PharmacyService;
+import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -28,13 +29,9 @@ public class PharmacyController {
     }
 
     @POST
-    public Response addPharmacy(PharmacyRequest request) {
-        try {
-            pharmacyService.addPharmacy(request);
-            return Response.ok("Pharmacy added successfully").build();
-        } catch (Exception e) {
-            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
-        }
+    public Response addPharmacy(@Valid PharmacyRequest request) {
+        pharmacyService.addPharmacy(request);
+        return Response.ok("Pharmacy added successfully").build();
     }
 
 

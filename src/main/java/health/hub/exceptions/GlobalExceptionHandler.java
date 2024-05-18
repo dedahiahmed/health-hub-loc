@@ -1,7 +1,6 @@
 package health.hub.exceptions;
-
-import jakarta.validation.ConstraintViolation;
-import jakarta.validation.ConstraintViolationException;
+import jakarta.ws.rs.NotFoundException;
+import jakarta.ws.rs.NotSupportedException;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.ExceptionMapper;
 import jakarta.ws.rs.ext.Provider;
@@ -10,37 +9,45 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Provider
-public class GlobalExceptionHandler implements ExceptionMapper<Exception> {
+public class GlobalExceptionHandler implements ExceptionMapper<Throwable> {
 
     @Override
-    public Response toResponse(Exception exception) {
-        // Handle different types of exceptions and map them to appropriate HTTP responses
+    public Response toResponse(Throwable exception) {
+        Map<String, Object> error = new HashMap<>();
+
         if (exception instanceof IllegalArgumentException) {
-            // Handle IllegalArgumentException
-            return Response.status(Response.Status.BAD_REQUEST)
-                    .entity(exception.getMessage())
-                    .build();
-        } else if (exception instanceof ConstraintViolationException) {
-            // Handle ConstraintViolationException
-            return handleConstraintViolationException((ConstraintViolationException) exception);
+            return handleIllegalArgumentException((IllegalArgumentException) exception);
+        } else if (exception instanceof NotFoundException) {
+            return handleNotFoundException((NotFoundException) exception);
+        } else if (exception instanceof NotSupportedException) {
+            return handleNotSupportedException((NotSupportedException) exception);
         } else {
-            // Handle other types of exceptions (generic error handling)
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                    .entity("An unexpected error occurred")
-                    .build();
+            return handleOtherExceptions(exception);
         }
     }
 
-    private Response handleConstraintViolationException(ConstraintViolationException exception) {
-        final Map<String, String> constraintViolations = new HashMap<>();
+    private Response handleIllegalArgumentException(IllegalArgumentException ex) {
+        Map<String, Object> error = new HashMap<>();
+        error.put("message", ex.getMessage());
+        return Response.status(Response.Status.BAD_REQUEST).entity(error).build();
+    }
 
-        for (ConstraintViolation<?> cv : exception.getConstraintViolations()) {
-            String path = cv.getPropertyPath().toString().split("\\.")[2];
-            constraintViolations.put(path, cv.getMessage());
-        }
+    private Response handleNotFoundException(NotFoundException ex) {
+        Map<String, Object> error = new HashMap<>();
+        error.put("message", ex.getMessage());
+        return Response.status(Response.Status.NOT_FOUND).entity(error).build();
+    }
 
-        return Response.status(Response.Status.PRECONDITION_FAILED)
-                .entity(constraintViolations)
-                .build();
+    private Response handleNotSupportedException(NotSupportedException ex) {
+        Map<String, Object> error = new HashMap<>();
+        error.put("message", ex.getMessage());
+        return Response.status(Response.Status.METHOD_NOT_ALLOWED).entity(error).build();
+    }
+
+    private Response handleOtherExceptions(Throwable ex) {
+        Map<String, Object> error = new HashMap<>();
+        error.put("message", ex.getMessage());
+        return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(error).build();
     }
 }
+
