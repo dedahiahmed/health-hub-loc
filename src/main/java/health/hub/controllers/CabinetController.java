@@ -34,9 +34,9 @@ public class CabinetController {
     }
     @DELETE
     @Path("/{id}")
-    public Response deleteCabinetById(@PathParam("id") Long id) {
+    public Response deleteCabinetBy(@PathParam("id") Long id) {
         try {
-            cabinetService.deleteCabinetById(id);
+            cabinetService.deleteCabinet(id);
             return Response.ok("Cabinet deleted successfully").build();
         } catch (NotFoundException e) {
             return Response.status(Response.Status.NOT_FOUND)

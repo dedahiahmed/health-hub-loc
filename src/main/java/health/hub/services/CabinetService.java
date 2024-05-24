@@ -54,7 +54,7 @@ public class CabinetService {
         // Return a success message
         return "Cabinet added successfully";
     }
-    public void deleteCabinetById(Long id) {
+    public void deleteCabinet(Long id) {
         Object[] cabinet=cabinetRepository.getCabinetById(id);
         if (cabinet == null) {
             throw new NotFoundException("Cabinet not found with id: " + id);
