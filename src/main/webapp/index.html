@@ -1,10 +1,137 @@
+<!--<!DOCTYPE html>-->
+<!--<html>-->
+<!--<head>-->
+<!--    <title>Simple Google Map</title>-->
+<!--    <style>-->
+<!--        /* Définit la taille de la carte */-->
+<!--        #map {-->
+<!--            height: 100%;-->
+<!--        }-->
+<!--        /* L'élément HTML doit avoir une hauteur et une largeur définies */-->
+<!--        html, body {-->
+<!--            height: 100%;-->
+<!--            margin: 0;-->
+<!--            padding: 0;-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div id="map"></div>-->
+<!--<script>-->
+<!--    // Fonction d'initialisation de la carte-->
+<!--    function initMap() {-->
+<!--        // Coordonnées pour centrer la carte-->
+<!--        var location = {lat: 18.089568255185064, lng: -15.984527865438487};-->
+
+<!--        // Statut d'ouverture de la pharmacie (exemple)-->
+<!--        var isOpen = true; // Changer cette variable selon le statut actuel-->
+
+<!--        // Contenu de la fenêtre d'information basé sur le statut-->
+<!--        var infoWindowContent = '<div><strong>Pharmacy Zemzem</strong><br>' +-->
+<!--            'Status: ' + (isOpen ? 'Open' : 'Closed') + '</div>';-->
+
+<!--        // Création de la carte centrée sur la localisation-->
+<!--        var map = new google.maps.Map(document.getElementById('map'), {-->
+<!--            zoom: 12,-->
+<!--            center: location-->
+<!--        });-->
+
+<!--        // Création de la fenêtre d'information-->
+<!--        var infowindow = new google.maps.InfoWindow({-->
+<!--            content: infoWindowContent-->
+<!--        });-->
+
+<!--        // Marqueur positionné à la localisation avec un titre-->
+<!--        var marker = new google.maps.Marker({-->
+<!--            position: location,-->
+<!--            map: map,-->
+<!--            title: 'Pharmacy Zemzem'-->
+<!--        });-->
+
+<!--        // Ajouter un événement au marqueur pour ouvrir la fenêtre d'information au clic-->
+<!--        marker.addListener('click', function() {-->
+<!--            infowindow.open(map, marker);-->
+<!--        });-->
+<!--    }-->
+<!--</script>-->
+<!--&lt;!&ndash; Charger l'API de Google Maps en utilisant votre clé API &ndash;&gt;-->
+<!--<script async defer-->
+<!--        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC7iU-ErVpTKuucu5uUi59Nqp0w7WNO4eA&libraries=places&callback=initMap">-->
+<!--</script>-->
+<!--</body>-->
+<!--</html>-->
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Start Page</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    </head>
-    <body>
-        <h1>Hello from Payara!</h1>
-    </body>
+<head>
+    <title>Simple Google Map</title>
+    <style>
+        /* Définit la taille de la carte */
+        #map {
+            height: 100%;
+        }
+        /* L'élément HTML doit avoir une hauteur et une largeur définies */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+<div id="map"></div>
+<script>
+    // Fonction d'initialisation de la carte
+    function initMap() {
+        // Coordonnées pour centrer la carte
+        var location = {lat: 18.089568255185064, lng: -15.984527865438487};
+
+        // Statut d'ouverture de la pharmacie (exemple)
+        var isOpen = true; // Changer cette variable selon le statut actuel
+
+        // Contenu de la fenêtre d'information basé sur le statut
+        var infoWindowContent = '<div><strong>Pharmacy Zemzem</strong><br>' +
+            'Status: ' + (isOpen ? 'Open' : 'Closed') + '</div>';
+
+        // Création de la carte centrée sur la localisation
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 12,
+            center: location
+        });
+
+        // Création de la fenêtre d'information
+        var infowindow = new google.maps.InfoWindow({
+            content: infoWindowContent
+        });
+
+        // Marqueur positionné à la localisation avec un titre
+        var marker = new google.maps.Marker({
+            position: location,
+            map: map,
+            title: 'Pharmacy Zemzem'
+        });
+
+        // Ajouter un événement au marqueur pour ouvrir la fenêtre d'information au clic
+        marker.addListener('click', function() {
+            infowindow.open(map, marker);
+        });
+
+        // Ajouter deux autres marqueurs avec leurs coordonnées
+        var marker2 = new google.maps.Marker({
+            position: {lat: 18.058670493440367, lng: -15.968744902226268}, // Coordonnées du deuxième point
+            map: map,
+            title: 'Pharmacie El amen'
+        });
+
+        var marker3 = new google.maps.Marker({
+            position: {lat: 18.08814725264223, lng: -15.985982692426427}, // Coordonnées du troisième point,
+            map: map,
+            title: 'Pharmacie El Avia'
+        });
+    }
+</script>
+<!-- Charger l'API de Google Maps en utilisant votre clé API -->
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC7iU-ErVpTKuucu5uUi59Nqp0w7WNO4eA&libraries=places&callback=initMap">
+</script>
+</body>
 </html>

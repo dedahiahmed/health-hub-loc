@@ -8,6 +8,7 @@
 
         <class>health.hub.entities.User</class>
         <class>health.hub.entities.Pharmacy</class>
+        <class>health.hub.entities.Cabinet</class>
         <properties>
             <property name="hibernate.jdbc.time_zone" value="UTC"/>
             <property name="dialect" value="org.hibernate.spatial.dialect.postgis.PostgisDialect"/>
