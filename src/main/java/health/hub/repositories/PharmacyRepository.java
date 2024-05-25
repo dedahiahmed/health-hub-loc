@@ -1,10 +1,7 @@
 package health.hub.repositories;
 
 import health.hub.requests.PharmacyRequest;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
-import jakarta.persistence.Query;
+import jakarta.persistence.*;
 
 import java.util.List;
 
@@ -60,13 +57,45 @@ public class PharmacyRepository {
         return count.intValue() != 0;
     }
 
-    
+
     public boolean existsByName(String name) {
         String jpql = "SELECT COUNT(p) FROM Pharmacy p WHERE p.name = :name";
         Query query = entityManager.createQuery(jpql);
         query.setParameter("name", name);
         Long count = (Long) query.getSingleResult();
         return count != 0;
+    }
+
+    public Object[] getPharmacyById(Long id) {
+        try {
+            String sql = "SELECT id, name, ST_X(location) AS longitude, ST_Y(location) AS latitude, is_open_tonight FROM pharmacy WHERE id = ?";
+            Query query = entityManager.createNativeQuery(sql);
+            query.setParameter(1, id);
+            return (Object[]) query.getSingleResult();
+        } catch (NoResultException e) {
+            // Handle the case where no result is found
+            return null;
+        } finally {
+            entityManager.close();
+        }
+    }
+
+    public void deletePharmacyById(Long id) {
+        try {
+            entityManager.getTransaction().begin(); // Begin transaction
+
+            String sql = "DELETE FROM pharmacy WHERE id = ?";
+            Query query = entityManager.createNativeQuery(sql);
+            query.setParameter(1, id);
+            query.executeUpdate();
+
+            entityManager.getTransaction().commit(); // Commit transaction
+        } catch (Exception e) {
+            if (entityManager.getTransaction().isActive()) {
+                entityManager.getTransaction().rollback(); // Rollback transaction if active
+            }
+            throw e; // Let the exception propagate
+        }
     }
 
 

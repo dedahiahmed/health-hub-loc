@@ -1,5 +1,6 @@
 package health.hub.controllers;
 
+import health.hub.annotations.RoleRequired;
 import health.hub.entities.User;
 import health.hub.services.UserService;
 import jakarta.ws.rs.*;
@@ -20,6 +21,7 @@ public class UserController {
     UserService userService = new UserService();
 
     @GET
+    @RoleRequired("ADMIN")
     public List<User> getallUsers() {
         return userService.getallUsers();
     }
