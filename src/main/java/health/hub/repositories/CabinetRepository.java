@@ -68,31 +68,29 @@ public class CabinetRepository {
     /////
     public void deleteCabinetById(Long id) {
         try {
-            entityManager.getTransaction().begin();
+            entityManager.getTransaction().begin(); // Begin transaction
 
-            // Récupérer l'entité Cabinet par son identifiant
-            Cabinet cabinet = entityManager.find(Cabinet.class, id);
+            String sql = "DELETE FROM cabinet WHERE id = ?";
+            Query query = entityManager.createNativeQuery(sql);
+            query.setParameter(1, id);
+            query.executeUpdate();
 
-            if (cabinet != null) {
-                // Supprimer l'entité
-                entityManager.remove(cabinet);
-            }
-
-            entityManager.getTransaction().commit();
+            entityManager.getTransaction().commit(); // Commit transaction
         } catch (Exception e) {
             if (entityManager.getTransaction().isActive()) {
-                entityManager.getTransaction().rollback();
+                entityManager.getTransaction().rollback(); // Rollback transaction if active
             }
-            throw e;
+            throw e; // Let the exception propagate
         }
     }
     public Object[] getCabinetById(Long id) {
-        String jpql = "SELECT new health.hub.responses.CabinetResponse(c.id, c.nom, ST_X(c.location), ST_Y(c.location)) FROM Cabinet c WHERE c.id = :id";
-        Query query = entityManager.createQuery(jpql);
-        query.setParameter("id", id);
         try {
+            String sql = "SELECT id, nom, ST_X(location) AS longitude, ST_Y(location) AS latitude FROM cabinet WHERE id = ?";
+            Query query = entityManager.createNativeQuery(sql);
+            query.setParameter(1, id);
             return (Object[]) query.getSingleResult();
         } catch (NoResultException e) {
+            // Handle the case where no result is found
             return null;
         }
     }
