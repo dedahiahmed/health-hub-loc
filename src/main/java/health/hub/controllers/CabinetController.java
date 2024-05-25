@@ -27,11 +27,21 @@ public class CabinetController {
         return cabinetService.getAllCabinets();
     }
 
+    @GET
+    @Path("/{id}")
+    public Response getCabbinetById(@PathParam("id") Long id) {
+        CabinetResponse cabinettResponse = cabinetService.getcabinetById(id);
+
+        return Response.ok(cabinettResponse).build();
+    }
+
     @POST
     public Response addCabinet(@Valid CabinetRequest request) {
         cabinetService.addCabinet(request);
         return Response.ok("Cabinet added successfully").build();
     }
+
+
     @DELETE
     @Path("/{id}")
     public Response deleteCabinetBy(@PathParam("id") Long id) {

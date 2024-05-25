@@ -61,4 +61,24 @@ public class CabinetService {
         }
         cabinetRepository.deleteCabinetById(id);
     }
+
+    public CabinetResponse getcabinetById(Long id) {
+        Object[] result = cabinetRepository.getCabinetById(id);
+        if (result == null) {
+            throw new NotFoundException("cabinet not found with id: " + id);
+        }
+
+        Long cabinetId = ((Number) result[0]).longValue();
+        String nom = (String) result[1];
+        Double longitude = ((Number) result[2]).doubleValue();
+        Double latitude = ((Number) result[3]).doubleValue();
+       // boolean isOpenTonight = (boolean) result[4];
+
+        return CabinetResponse.builder()
+                .id(cabinetId)
+                .nom(nom)
+                .longitude(longitude)
+                .latitude(latitude)
+                .build();
+    }
 }

@@ -94,32 +94,6 @@ public class CabinetRepository {
             return null;
         }
     }
-    /////
-//    public void update(CabinetRequest request) {
-//        try {
-//            entityManager.getTransaction().begin();
-//
-//            // Récupérer l'entité Cabinet par ses coordonnées
-//            String sql = "SELECT c FROM Cabinet c WHERE ST_X(c.location) = :longitude AND ST_Y(c.location) = :latitude";
-//            Query query = entityManager.createQuery(sql);
-//            query.setParameter("longitude", request.getLongitude());
-//            query.setParameter("latitude", request.getLatitude());
-//            Cabinet cabinet = (Cabinet) query.getSingleResult();
-//
-//            if (cabinet != null) {
-//                // Mettre à jour les propriétés de l'entité
-//                cabinet.setNom(request.getNom());
-//                cabinet.setLocation(geometryFactory.createPoint(new Coordinate(request.getLongitude(), request.getLatitude())));
-//
-//                // Mettre à jour l'entité dans la base de données
-//                entityManager.merge(cabinet);
-//            }
-//
-//            entityManager.getTransaction().commit();
-//        } catch (Exception e) {
-//            entityManager.getTransaction().rollback();
-//            throw e;
-//        }
-//    }
+
 
 }
