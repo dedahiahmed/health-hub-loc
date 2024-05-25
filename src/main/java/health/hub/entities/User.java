@@ -1,6 +1,5 @@
 package health.hub.entities;
 
-import health.hub.Secutity.PasswordService;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -38,10 +37,5 @@ public class User {
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)
     private Role role;
-
-    public void setPassword(String plainTextPassword) {
-        this.password = PasswordService.hashPassword(plainTextPassword);
-
-    }
 
 }
