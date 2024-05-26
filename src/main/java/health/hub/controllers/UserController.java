@@ -26,9 +26,6 @@ public class UserController {
     @Inject
     UserService userService;
 
-    @Inject
-    AuthService authService;
-
     @GET
     public List<User> getAllUsers() {
         return userService.getAllUsers();
@@ -55,7 +52,6 @@ public class UserController {
 
     @POST
     @Path("/register")
-    @PermitAll
     public User register(User user) {
         return userService.add(user);
     }
@@ -72,35 +68,35 @@ public class UserController {
         userService.delete(id);
     }
 
-    @POST
-    @Path("/login")
-    @PermitAll
-    @Transactional
-    public Response login() {
-        String username = "Aly";
-        String password = "1234";
-        System.out.println("Attempting login for user: " + username);
-
-        String token = authService.authenticate(username, password);
-
-        if (token != null) {
-            System.out.println("Login successful, returning token");
-            System.out.println("Bearer "+token);
-            JsonObject jsonResponse = Json.createObjectBuilder()
-                    .add("token", token)
-                    .build();
-            //return "Bearer " + token;
-            return Response.ok(jsonResponse)
-                    .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
-                    .type(MediaType.APPLICATION_JSON)
-                    .build();
-        } else {
-            //return "no Autorize";
-            System.out.println("Login failed, returning 401");
-            return Response.status(Response.Status.UNAUTHORIZED)
-                    .entity("Authentication failed")
-                    .build();
-        }
-    }
+//    @POST
+//    @Path("/login")
+//    @PermitAll
+//    @Transactional
+//    public Response login() {
+//        String username = "Aly";
+//        String password = "1234";
+//        System.out.println("Attempting login for user: " + username);
+//
+//        String token = authService.authenticate(username, password);
+//
+//        if (token != null) {
+//            System.out.println("Login successful, returning token");
+//            System.out.println("Bearer "+token);
+//            JsonObject jsonResponse = Json.createObjectBuilder()
+//                    .add("token", token)
+//                    .build();
+//            //return "Bearer " + token;
+//            return Response.ok(jsonResponse)
+//                    .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+//                    .type(MediaType.APPLICATION_JSON)
+//                    .build();
+//        } else {
+//            //return "no Autorize";
+//            System.out.println("Login failed, returning 401");
+//            return Response.status(Response.Status.UNAUTHORIZED)
+//                    .entity("Authentication failed")
+//                    .build();
+//        }
+//    }
 
 }

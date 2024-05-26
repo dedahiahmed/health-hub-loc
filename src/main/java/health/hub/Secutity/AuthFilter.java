@@ -1,46 +1,50 @@
 package health.hub.Secutity;
 
-import jakarta.annotation.Priority;
-import jakarta.annotation.security.PermitAll;
-import jakarta.ws.rs.Priorities;
-import jakarta.ws.rs.container.ContainerRequestContext;
-import jakarta.ws.rs.container.ContainerRequestFilter;
-import jakarta.ws.rs.container.ResourceInfo;
-import jakarta.ws.rs.core.Context;
-import jakarta.ws.rs.core.Response;
-import jakarta.ws.rs.ext.Provider;
+
+import jakarta.servlet.*;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
 
 import java.io.IOException;
 
-@Provider
-@Priority(Priorities.AUTHENTICATION)
-public class AuthFilter implements ContainerRequestFilter {
-
-    @Context
-    private ResourceInfo resourceInfo;
+public class AuthFilter implements Filter {
 
     @Override
-    public void filter(ContainerRequestContext requestContext) throws IOException {
+    public void init(FilterConfig filterConfig) throws ServletException {
+        // Initialisation du filtre
+    }
 
-        if (resourceInfo.getResourceMethod().getAnnotation(PermitAll.class) != null) {
-            // La ressource est marquée avec @PermitAll, on ne fait pas d'authentification
-            return;
-        }
+    @Override
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
+        HttpServletResponse response = (HttpServletResponse) servletResponse;
 
-        String authHeader = requestContext.getHeaderString("Authorization");
+        String authHeader = request.getHeader("Authorization");
+
+        System.out.println("hi");
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             return;
         }
 
         String token = authHeader.substring(7);
 
         try {
-            AuthService.isValidToken(token);
+
+            if (!AuthService.isValidToken(token)) {
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                return;
+            }
         } catch (Exception e) {
-            requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            return;
         }
+
+        // Passe la requête à la chaîne de filtres suivante
+        filterChain.doFilter(request, response);
     }
+
 
 }
