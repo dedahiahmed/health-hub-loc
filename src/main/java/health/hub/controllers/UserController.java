@@ -22,6 +22,7 @@ public class UserController {
     UserService userService;
 
     @GET
+    @Path("/all")
     public List<User> getAllUsers() {
         return userService.getAllUsers();
     }
@@ -39,8 +40,7 @@ public class UserController {
         return userService.findByUsername(username);
     }
 
-    @POST
-    @RolesAllowed({"ADMIN"}) // Seulement accessible par les administrateurs
+    @POST// Seulement accessible par les administrateurs
     public User add(User user) {
         return userService.add(user);
     }

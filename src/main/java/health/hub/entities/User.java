@@ -1,5 +1,6 @@
 package health.hub.entities;
 
+import health.hub.Secutity.PasswordService;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -38,4 +39,9 @@ public class User {
     @Column(name = "role", nullable = false)
     private Role role;
 
+    public void setPassword(String plainTextPassword) {
+        // Utiliser le service PasswordService pour crypter le mot de passe
+        this.password = PasswordService.hashPassword(plainTextPassword);
+        //PasswordService.hashPassword(plainTextPassword);
+    }
 }

@@ -25,11 +25,9 @@
     <filter-mapping>
         <filter-name>AuthFilter</filter-name>
         <url-pattern>/api/health/pharmacies/</url-pattern>
+        <url-pattern>/api/health/users/all</url-pattern>
     </filter-mapping>
-    <filter-mapping>
-        <filter-name>AuthFilter</filter-name>
-        <url-pattern>/api/health/users/*</url-pattern>
-    </filter-mapping>
+
 
 
 </web-app>
