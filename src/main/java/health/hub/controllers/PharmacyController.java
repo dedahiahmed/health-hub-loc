@@ -1,5 +1,6 @@
 package health.hub.controllers;
 
+import health.hub.annotations.RoleRequired;
 import health.hub.requests.PharmacyRequest;
 import health.hub.responses.PharmacyResponse;
 import health.hub.services.PharmacyService;
@@ -34,6 +35,7 @@ public class PharmacyController {
 
     @GET
     @Path("/{id}")
+    @RoleRequired("ADMIN")
     public Response getPharmacyById(@PathParam("id") Long id) {
         PharmacyResponse pharmacyResponse = pharmacyService.getPharmacyById(id);
 

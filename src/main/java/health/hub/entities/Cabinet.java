@@ -22,6 +22,6 @@ public class Cabinet {
     @Column(unique = true, name = "location", columnDefinition = "geometry(Point,4326)", nullable = false)
     private Point location;
 
-    @OneToMany(mappedBy = "cabinet", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Doctor> doctors;
+//    @OneToMany(mappedBy = "cabinet", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<Doctor> doctors;
 }
