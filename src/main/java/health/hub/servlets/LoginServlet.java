@@ -1,7 +1,6 @@
 package health.hub.servlets;
 
 import health.hub.entities.Role;
-import health.hub.repositories.UserRepository;
 import jakarta.inject.Inject;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
