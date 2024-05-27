@@ -1,4 +1,4 @@
-package health.hub.Secutity;
+package health.hub.services;
 
 
 import health.hub.entities.User;
@@ -56,10 +56,9 @@ public class AuthService {
     public String authenticate(String username, String password) {
         User user = userRepository.findByUsername(username);
         if (user != null && PasswordService.verifyPassword(password, user.getPassword())) {
-            System.out.println("Succes !");
             return generateToken(user);
         }
-        System.out.println("no Succes !");
+
         return null;
     }
 }

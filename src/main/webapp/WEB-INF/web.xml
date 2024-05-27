@@ -5,20 +5,10 @@
                              http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
 
-    <!-- Servlet Configuration -->
-    <servlet>
-        <servlet-name>LoginServlet</servlet-name>
-        <servlet-class>health.hub.Secutity.LoginServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>LoginServlet</servlet-name>
-        <url-pattern>/login</url-pattern>
-    </servlet-mapping>
 
-    <!-- Filter Configuration -->
     <filter>
         <filter-name>AuthFilter</filter-name>
-        <filter-class>health.hub.Secutity.AuthFilter</filter-class>
+        <filter-class>health.hub.filters.AuthFilter</filter-class>
     </filter>
 
 
@@ -27,7 +17,22 @@
         <url-pattern>/api/health/pharmacies/</url-pattern>
         <url-pattern>/api/health/users/all</url-pattern>
     </filter-mapping>
-
-
+    <servlet>
+        <servlet-name>ServletAdaptor</servlet-name>
+        <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
+        <init-param>
+            <param-name>jersey.config.server.provider.packages</param-name>
+            <param-value>health.hub.controllers</param-value>
+        </init-param>
+        <init-param>
+            <param-name>jersey.config.server.provider.classnames</param-name>
+            <param-value>health.hub.filters.CORSFilter</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ServletAdaptor</servlet-name>
+        <url-pattern>/api/*</url-pattern>
+    </servlet-mapping>
 
 </web-app>
