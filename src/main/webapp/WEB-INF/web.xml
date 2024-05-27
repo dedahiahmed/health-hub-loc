@@ -26,7 +26,7 @@
         </init-param>
         <init-param>
             <param-name>jersey.config.server.provider.classnames</param-name>
-            <param-value>health.hub.filters.CORSFilter</param-value>
+            <param-value>health.hub.filters.CorsFilter</param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>

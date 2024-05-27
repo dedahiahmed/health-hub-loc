@@ -5,8 +5,6 @@ import health.hub.services.AuthService;
 import health.hub.services.UserService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
-import jakarta.json.Json;
-import jakarta.json.JsonObject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -26,7 +24,7 @@ public class UserController {
 
     @GET
     @Path("/all")
-    
+
     public List<User> getAllUsers() {
         return userService.getAllUsers();
     }
@@ -48,12 +46,7 @@ public class UserController {
     public User add(User user) {
         return userService.add(user);
     }
-
-    @POST
-    @Path("/register")
-    public User register(User user) {
-        return userService.add(user);
-    }
+    
 
     @PUT
     public Response update(User user) {
@@ -65,29 +58,6 @@ public class UserController {
     @DELETE
     public void delete(@PathParam("id") int id) {
         userService.delete(id);
-    }
-
-    @POST
-    @Path("/auth")
-    public Response login(JsonObject jsonObject) {
-        String username = jsonObject.getString("username");
-        String password = jsonObject.getString("password");
-
-        String token = authService.authenticate(username, password);
-
-        if (token != null) {
-            JsonObject jsonResponse = Json.createObjectBuilder()
-                    .add("token", token)
-                    .build();
-            return Response.ok(jsonResponse).build();
-        } else {
-            JsonObject errorResponse = Json.createObjectBuilder()
-                    .add("message", "Invalid credentials provided")
-                    .build();
-            return Response.status(Response.Status.FORBIDDEN)
-                    .entity(errorResponse)
-                    .build();
-        }
     }
 
 
