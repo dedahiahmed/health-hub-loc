@@ -30,7 +30,7 @@ public class CabinetController {
     @GET
     @Path("/{id}")
     public Response getCabbinetById(@PathParam("id") Long id) {
-        CabinetResponse cabinettResponse = cabinetService.getcabinetById(id);
+        CabinetResponse cabinettResponse = cabinetService.getCabinetById(id);
 
         return Response.ok(cabinettResponse).build();
     }

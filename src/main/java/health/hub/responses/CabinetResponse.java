@@ -9,6 +9,8 @@ import lombok.*;
 public class CabinetResponse {
     private Long id;
     private String nom;
+    private  String willaya;
+    private String Moughataa;
     private Double longitude;
     private Double latitude;
 }

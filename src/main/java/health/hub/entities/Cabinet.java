@@ -18,6 +18,8 @@ public class Cabinet {
     private Long id;
 
     private String nom;
+    private  String willaya;
+    private String Moughataa;
 
     @Column(unique = true, name = "location", columnDefinition = "geometry(Point,4326)", nullable = false)
     private Point location;
