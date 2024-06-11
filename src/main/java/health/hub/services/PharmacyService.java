@@ -6,6 +6,9 @@ import health.hub.responses.PharmacyResponse;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.NotFoundException;
 
+import java.time.DayOfWeek;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +41,50 @@ public class PharmacyService {
         return responses;
     }
 
+    public List<PharmacyResponse> Listepharmacie() {
+        LocalDateTime now = LocalDateTime.now();
+        LocalTime currentTime = now.toLocalTime();
+        DayOfWeek currentDay = now.getDayOfWeek();
+        System.out.println(now);
+        boolean isNightTime = currentTime.isAfter(LocalTime.of(23, 59)) || currentTime.isBefore(LocalTime.of(8, 0));
+        boolean isSunday = currentDay == DayOfWeek.FRIDAY;
+
+        List<Object[]> results = pharmacyRepository.getAll();
+        List<PharmacyResponse> responses = new ArrayList<>();
+
+        for (Object[] row : results) {
+            Long id = ((Number) row[0]).longValue();
+            String name = (String) row[1];
+            Double longitude = ((Number) row[2]).doubleValue();
+            Double latitude = ((Number) row[3]).doubleValue();
+            boolean isOpenTonight = (boolean) row[4];
+
+
+            // Filtrer les pharmacies en fonction des conditions
+            if ((isNightTime || isSunday) && !isOpenTonight) {
+                continue;
+            }
+
+
+            PharmacyResponse response = PharmacyResponse.builder()
+                    .id(id)
+                    .name(name)
+                    .longitude(longitude)
+                    .latitude(latitude)
+                    .isOpenTonight(isOpenTonight)
+                    .build();
+
+            responses.add(response);
+        }
+        return responses;
+    }
+
+
+    public String updateIsOpenTonight(Long pharmacyId, boolean isOpenTonight) {
+
+        return pharmacyRepository.updateIsOpenTonight(pharmacyId, isOpenTonight);
+
+    }
 
     public String addPharmacy(PharmacyRequest request) {
         // Check if a pharmacy already exists at the provided location
