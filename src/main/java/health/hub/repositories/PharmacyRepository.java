@@ -98,5 +98,28 @@ public class PharmacyRepository {
         }
     }
 
+    public String updateIsOpenTonight(Long id, boolean isOpenTonight) {
+        try {
+            entityManager.getTransaction().begin();
+
+            String sql = "UPDATE pharmacy SET is_open_tonight = ? WHERE id = ?";
+            Query query = entityManager.createNativeQuery(sql);
+            query.setParameter(1, isOpenTonight);
+            query.setParameter(2, id);
+
+            int updatedRows = query.executeUpdate();
+            entityManager.getTransaction().commit();
+
+            if (updatedRows == 0) {
+                return "Pharmacy with ID " + id + " not found.";
+            }
+
+            return "Successfully updated isOpenTonight.";
+        } catch (Exception e) {
+            entityManager.getTransaction().rollback();
+            throw e;
+        }
+    }
+
 
 }
