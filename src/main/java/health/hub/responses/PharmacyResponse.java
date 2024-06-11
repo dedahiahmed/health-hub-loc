@@ -12,5 +12,7 @@ public class PharmacyResponse {
     private String name;
     private Double longitude;
     private Double latitude;
+    private  String willaya;
+    private String moughataa;
     private boolean isOpenTonight;
 }

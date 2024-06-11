@@ -32,8 +32,28 @@ public class UserService {
     }
 
     @Transactional
-    public User update(User user) {
-        return userRepository.update(user);
+    public User updateuser(int id,User updatedUser) {
+        User existingUser = userRepository.getUser(id);
+
+        if (existingUser == null) {
+            throw new IllegalArgumentException("User not found");
+        }
+        // Update the fields of the existing user
+        if (updatedUser.getFullName() != null) {
+            existingUser.setFullName(updatedUser.getFullName());
+        }
+        if (updatedUser.getUsername() != null) {
+            existingUser.setUsername(updatedUser.getUsername());
+        }
+        if (updatedUser.getPassword() != null) {
+            existingUser.setPassword(updatedUser.getPassword());
+        }
+        if (updatedUser.getRole() != null) {
+            existingUser.setRole(updatedUser.getRole());
+        }
+
+        // Save the updated user back to the database
+        return userRepository.update(existingUser);
     }
 
     @Transactional

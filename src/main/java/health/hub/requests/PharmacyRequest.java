@@ -16,5 +16,10 @@ public class PharmacyRequest {
     private double longitude;
     @NotNull(message = "latitude cannot be null")
     private double latitude;
+    @NotNull(message = "willaya cannot be null")
+    private  String willaya;
+    @NotNull(message = "moughataa cannot be null")
+    private String moughataa;
+
     private boolean isOpenTonight;
 }

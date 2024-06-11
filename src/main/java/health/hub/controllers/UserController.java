@@ -42,19 +42,22 @@ public class UserController {
         return userService.findByUsername(username);
     }
 
-    @POST// Seulement accessible par les administrateurs
-    public User add(User user) {
-        return userService.add(user);
-    }
+
     
-
+    @Path("/update/{id}")
     @PUT
-    public Response update(User user) {
-        userService.update(user);
-        return Response.ok(user).build();
+    public Response updateuser(@PathParam("id") int id,User user) {
+        try {
+            User updatedUser = userService.updateuser(id, user);
+            return Response.ok(updatedUser).build();
+        } catch (IllegalArgumentException e) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
-    @Path("/{id}")
+    @Path("/delete/{id}")
     @DELETE
     public void delete(@PathParam("id") int id) {
         userService.delete(id);

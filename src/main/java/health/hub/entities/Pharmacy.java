@@ -24,6 +24,12 @@ public class Pharmacy {
     @Column(unique = true, name = "location", columnDefinition = "geometry(Point,4326)", nullable = false)
     private Point location;
 
+    @Column(nullable = false)
+    private  String willaya;
+
+    @Column(nullable = false)
+    private String moughataa;
+
     @Column(name = "is_open_tonight")
     private boolean isOpenTonight;
 }

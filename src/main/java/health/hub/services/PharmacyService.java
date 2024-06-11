@@ -26,13 +26,17 @@ public class PharmacyService {
             String name = (String) row[1];
             Double longitude = ((Number) row[2]).doubleValue();
             Double latitude = ((Number) row[3]).doubleValue();
-            boolean isOpenTonight = (boolean) row[4];
+            String willaya = ((String) row[4]);
+            String moughataa = ((String) row[5]);
+            boolean isOpenTonight = (boolean) row[6];
 
             PharmacyResponse response = PharmacyResponse.builder()
                     .id(id)
                     .name(name)
                     .longitude(longitude)
                     .latitude(latitude)
+                    .willaya(willaya)
+                    .moughataa(moughataa)
                     .isOpenTonight(isOpenTonight)
                     .build();
 
@@ -57,7 +61,9 @@ public class PharmacyService {
             String name = (String) row[1];
             Double longitude = ((Number) row[2]).doubleValue();
             Double latitude = ((Number) row[3]).doubleValue();
-            boolean isOpenTonight = (boolean) row[4];
+            String willaya = ((String) row[4]);
+            String moughataa = ((String) row[5]);
+            boolean isOpenTonight = (boolean) row[6];
 
 
             // Filtrer les pharmacies en fonction des conditions
@@ -71,6 +77,8 @@ public class PharmacyService {
                     .name(name)
                     .longitude(longitude)
                     .latitude(latitude)
+                    .willaya(willaya)
+                    .moughataa(moughataa)
                     .isOpenTonight(isOpenTonight)
                     .build();
 
@@ -110,17 +118,22 @@ public class PharmacyService {
             throw new NotFoundException("Pharmacy not found with id: " + id);
         }
 
+
         Long pharmacyId = ((Number) result[0]).longValue();
         String name = (String) result[1];
         Double longitude = ((Number) result[2]).doubleValue();
         Double latitude = ((Number) result[3]).doubleValue();
-        boolean isOpenTonight = (boolean) result[4];
+        String willaya = ((String) result[4]);
+        String moughataa = ((String) result[5]);
+        boolean isOpenTonight = (boolean) result[6];
 
         return PharmacyResponse.builder()
                 .id(pharmacyId)
                 .name(name)
                 .longitude(longitude)
                 .latitude(latitude)
+                .willaya(willaya)
+                .moughataa(moughataa)
                 .isOpenTonight(isOpenTonight)
                 .build();
     }
