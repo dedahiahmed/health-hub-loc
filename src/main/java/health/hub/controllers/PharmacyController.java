@@ -10,6 +10,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 import java.util.List;
+import java.util.Map;
 
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
@@ -24,6 +25,35 @@ public class PharmacyController {
     @GET
     public List<PharmacyResponse> getAllPharmacies() {
         return pharmacyService.getAllPharmacies();
+    }
+
+    @GET
+    public Response getPharmacies() {
+        try {
+            List<PharmacyResponse> pharmacies = pharmacyService.Listepharmacie();
+            return Response.ok(pharmacies).build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity("An error occurred while fetching pharmacies")
+                    .build();
+        }
+    }
+
+    @PUT
+    @Path("/isOpenTonight")
+    public Response updateIsOpenTonight(List<Map<String, Object>> updates) {
+        try {
+            for (Map<String, Object> update : updates) {
+                Long id = ((Number) update.get("id")).longValue();
+                boolean isOpenTonight = (boolean) update.get("isOpenTonight");
+                pharmacyService.updateIsOpenTonight(id, isOpenTonight);
+            }
+            return Response.ok("Pharmacies updated successfully").build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity("An error occurred while updating pharmacies")
+                    .build();
+        }
     }
 
     @POST
