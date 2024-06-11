@@ -23,6 +23,7 @@ public class PharmacyController {
 
 
     @GET
+    @Path("/all")
     public List<PharmacyResponse> getAllPharmacies() {
         return pharmacyService.getAllPharmacies();
     }
