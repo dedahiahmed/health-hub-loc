@@ -10,7 +10,7 @@ public class PharmacyRepository {
     EntityManager entityManager = entityManagerFactory.createEntityManager();
 
     public List<Object[]> getAll() {
-        String jpql = "SELECT id, name, ST_X(location) AS longitude, ST_Y(location) AS latitude, willaya, moughataa, is_open_tonight FROM pharmacy";
+        String jpql = "SELECT id, name, ST_X(location) AS longitude, ST_Y(location) AS latitude, willaya, moughataa, img,is_open_tonight FROM pharmacy";
         Query query = entityManager.createNativeQuery(jpql);
         return query.getResultList();
     }
@@ -22,8 +22,8 @@ public class PharmacyRepository {
 
 
             // Build the SQL query with parameters
-            String sql = "INSERT INTO pharmacy (name, location,willaya,moughataa ,is_open_tonight) " +
-                    "VALUES (?, ST_SetSRID(ST_MakePoint(?, ?), 4326), ?, ?, ?)";
+            String sql = "INSERT INTO pharmacy (name, location,willaya,moughataa,img ,is_open_tonight) " +
+                    "VALUES (?, ST_SetSRID(ST_MakePoint(?, ?), 4326), ?, ?,?, ?)";
 
             // Create a native SQL query
             Query query = entityManager.createNativeQuery(sql);
@@ -34,7 +34,8 @@ public class PharmacyRepository {
             query.setParameter(3, request.getLatitude());
             query.setParameter(4, request.getWillaya());
             query.setParameter(5, request.getMoughataa());
-            query.setParameter(6, request.isOpenTonight());
+            query.setParameter(6, request.getImg());
+            query.setParameter(7, request.isOpenTonight());
 
             // Execute the query
             query.executeUpdate();
@@ -70,7 +71,7 @@ public class PharmacyRepository {
 
     public Object[] getPharmacyById(Long id) {
         try {
-            String sql = "SELECT id, name, ST_X(location) AS longitude, ST_Y(location) AS latitude, is_open_tonight FROM pharmacy WHERE id = ?";
+            String sql = "SELECT id, name, ST_X(location) AS longitude, ST_Y(location) AS latitude, willaya,moughataa,img ,is_open_tonight FROM pharmacy WHERE id = ?";
             Query query = entityManager.createNativeQuery(sql);
             query.setParameter(1, id);
             return (Object[]) query.getSingleResult();

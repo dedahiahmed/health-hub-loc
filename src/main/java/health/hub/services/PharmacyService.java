@@ -28,7 +28,8 @@ public class PharmacyService {
             Double latitude = ((Number) row[3]).doubleValue();
             String willaya = ((String) row[4]);
             String moughataa = ((String) row[5]);
-            boolean isOpenTonight = (boolean) row[6];
+            String img = ((String) row[6]);
+            boolean isOpenTonight = (boolean) row[7];
 
             PharmacyResponse response = PharmacyResponse.builder()
                     .id(id)
@@ -37,6 +38,7 @@ public class PharmacyService {
                     .latitude(latitude)
                     .willaya(willaya)
                     .moughataa(moughataa)
+                    .img(img)
                     .isOpenTonight(isOpenTonight)
                     .build();
 
@@ -63,7 +65,8 @@ public class PharmacyService {
             Double latitude = ((Number) row[3]).doubleValue();
             String willaya = ((String) row[4]);
             String moughataa = ((String) row[5]);
-            boolean isOpenTonight = (boolean) row[6];
+            String img = ((String) row[6]);
+            boolean isOpenTonight = (boolean) row[7];
 
 
             // Filtrer les pharmacies en fonction des conditions
@@ -79,6 +82,7 @@ public class PharmacyService {
                     .latitude(latitude)
                     .willaya(willaya)
                     .moughataa(moughataa)
+                    .img(img)
                     .isOpenTonight(isOpenTonight)
                     .build();
 
@@ -125,7 +129,8 @@ public class PharmacyService {
         Double latitude = ((Number) result[3]).doubleValue();
         String willaya = ((String) result[4]);
         String moughataa = ((String) result[5]);
-        boolean isOpenTonight = (boolean) result[6];
+        String img = ((String) result[6]);
+        boolean isOpenTonight = (boolean) result[7];
 
         return PharmacyResponse.builder()
                 .id(pharmacyId)
@@ -134,6 +139,7 @@ public class PharmacyService {
                 .latitude(latitude)
                 .willaya(willaya)
                 .moughataa(moughataa)
+                .img(img)
                 .isOpenTonight(isOpenTonight)
                 .build();
     }

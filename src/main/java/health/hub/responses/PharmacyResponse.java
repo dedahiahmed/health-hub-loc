@@ -14,5 +14,6 @@ public class PharmacyResponse {
     private Double latitude;
     private  String willaya;
     private String moughataa;
+    private String img;
     private boolean isOpenTonight;
 }

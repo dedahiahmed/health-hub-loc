@@ -20,6 +20,8 @@ public class PharmacyRequest {
     private  String willaya;
     @NotNull(message = "moughataa cannot be null")
     private String moughataa;
+    @NotNull(message = "image cannot be null")
+    private String img;
 
     private boolean isOpenTonight;
 }

@@ -30,6 +30,9 @@ public class Pharmacy {
     @Column(nullable = false)
     private String moughataa;
 
+    @Column(nullable = false)
+    private String img;
+
     @Column(name = "is_open_tonight")
     private boolean isOpenTonight;
 }
