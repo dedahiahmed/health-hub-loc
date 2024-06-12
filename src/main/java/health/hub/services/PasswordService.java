@@ -8,7 +8,6 @@ public class PasswordService {
 
     public static String hashPassword(String plainTextPassword) {
         // Utiliser BCrypt pour générer un hash de mot de passe sécurisé
-
         return BCrypt.withDefaults().hashToString(BCRYPT_LOG_ROUNDS, plainTextPassword.toCharArray());
     }
 

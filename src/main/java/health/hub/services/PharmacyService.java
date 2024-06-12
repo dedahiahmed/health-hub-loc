@@ -38,7 +38,6 @@ public class PharmacyService {
 
 
     public String updateIsOpenTonight(Long pharmacyId, boolean isOpenTonight) {
-
         return pharmacyRepository.updateIsOpenTonight(pharmacyId, isOpenTonight);
 
     }
@@ -64,11 +63,8 @@ public class PharmacyService {
 
     public Pharmacy updatePharmacy(Long id, Pharmacy pharmacy) {
         Optional<Pharmacy> existingPharmacyOptional = pharmacyRepository.findById(id);
-        System.out.println(existingPharmacyOptional);
         if (existingPharmacyOptional.isPresent()) {
             Pharmacy existingPharmacy = existingPharmacyOptional.get();
-            System.out.println(existingPharmacy);
-            // Update attributes if provided
             if (pharmacy.getName() != null) {
                 existingPharmacy.setName(pharmacy.getName());
             }
@@ -81,11 +77,9 @@ public class PharmacyService {
             if (pharmacy.getImg() != null) {
                 existingPharmacy.setImg(pharmacy.getImg());
             }
-            // Update isOpenTonight only if provided
             pharmacy.setOpenTonight(existingPharmacy.isOpenTonight());
             return pharmacyRepository.update(existingPharmacy);
         } else {
-            // Handle the case where the pharmacy with the provided ID does not exist
             throw new IllegalArgumentException("Pharmacy with ID " + id + " not found");
         }
     }
