@@ -32,8 +32,11 @@ public class PharmacyRepository {
         }
     }
 
-    public void update(Pharmacy pharmacy) {
-        entityManager.merge(pharmacy);
+    public Pharmacy update(Pharmacy pharmacy) {
+        entityManager.getTransaction().begin();
+        Pharmacy updatedPharmacy = entityManager.merge(pharmacy);
+        entityManager.getTransaction().commit();
+        return updatedPharmacy;
     }
 
     public boolean existsByLocation(double longitude, double latitude) {

@@ -62,7 +62,7 @@ public class PharmacyService {
         return result;
     }
 
-    public void updatePharmacy(Long id, Pharmacy pharmacy) {
+    public Pharmacy updatePharmacy(Long id, Pharmacy pharmacy) {
         Optional<Pharmacy> existingPharmacyOptional = pharmacyRepository.findById(id);
         System.out.println(existingPharmacyOptional);
         if (existingPharmacyOptional.isPresent()) {
@@ -83,7 +83,7 @@ public class PharmacyService {
             }
             // Update isOpenTonight only if provided
             pharmacy.setOpenTonight(existingPharmacy.isOpenTonight());
-            pharmacyRepository.update(existingPharmacy);
+            return pharmacyRepository.update(existingPharmacy);
         } else {
             // Handle the case where the pharmacy with the provided ID does not exist
             throw new IllegalArgumentException("Pharmacy with ID " + id + " not found");
