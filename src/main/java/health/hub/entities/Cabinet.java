@@ -23,5 +23,5 @@ public class Cabinet {
     private Double longitude;
     private Double latitude;
 
-    // Constructor, getters, setters, and other annotations can remain unchanged
+     
 }
