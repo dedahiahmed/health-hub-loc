@@ -58,8 +58,7 @@ public class PharmacyController {
 
     @POST
     public Response addPharmacy(@Valid Pharmacy request) {
-        pharmacyService.addPharmacy(request);
-        return Response.ok().build();
+        return Response.ok(pharmacyService.addPharmacy(request)).build();
     }
 
     @GET
@@ -74,7 +73,7 @@ public class PharmacyController {
     @Path("/{id}")
     public Response deletePharmacyById(@PathParam("id") Long id) {
         pharmacyService.deletePharmacyById(id);
-        return Response.ok().build();
+        return Response.noContent().build();
 
     }
 }

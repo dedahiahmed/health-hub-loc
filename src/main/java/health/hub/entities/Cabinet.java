@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,11 +19,18 @@ public class Cabinet {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Nom cannot be null or empty")
     private String nom;
-    private String willaya;
-    private String moughataa;
-    private Double longitude;
-    private Double latitude;
 
-     
+    @NotBlank(message = "Willaya cannot be null or empty")
+    private String willaya;
+
+    @NotBlank(message = "Moughataa cannot be null or empty")
+    private String moughataa;
+
+    @NotNull(message = "Longitude cannot be null")
+    private Double longitude;
+
+    @NotNull(message = "Latitude cannot be null")
+    private Double latitude;
 }
