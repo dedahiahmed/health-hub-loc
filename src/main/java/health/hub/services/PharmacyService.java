@@ -9,8 +9,8 @@ import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
-
 
 public class PharmacyService {
     @Inject
@@ -60,6 +60,34 @@ public class PharmacyService {
         }
 
         return result;
+    }
+
+    public void updatePharmacy(Long id, Pharmacy pharmacy) {
+        Optional<Pharmacy> existingPharmacyOptional = pharmacyRepository.findById(id);
+        System.out.println(existingPharmacyOptional);
+        if (existingPharmacyOptional.isPresent()) {
+            Pharmacy existingPharmacy = existingPharmacyOptional.get();
+            System.out.println(existingPharmacy);
+            // Update attributes if provided
+            if (pharmacy.getName() != null) {
+                existingPharmacy.setName(pharmacy.getName());
+            }
+            if (pharmacy.getWillaya() != null) {
+                existingPharmacy.setWillaya(pharmacy.getWillaya());
+            }
+            if (pharmacy.getMoughataa() != null) {
+                existingPharmacy.setMoughataa(pharmacy.getMoughataa());
+            }
+            if (pharmacy.getImg() != null) {
+                existingPharmacy.setImg(pharmacy.getImg());
+            }
+            // Update isOpenTonight only if provided
+            pharmacy.setOpenTonight(existingPharmacy.isOpenTonight());
+            pharmacyRepository.update(existingPharmacy);
+        } else {
+            // Handle the case where the pharmacy with the provided ID does not exist
+            throw new IllegalArgumentException("Pharmacy with ID " + id + " not found");
+        }
     }
 
     public void deletePharmacyById(Long id) {

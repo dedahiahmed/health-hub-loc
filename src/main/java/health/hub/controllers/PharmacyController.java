@@ -76,4 +76,11 @@ public class PharmacyController {
         return Response.noContent().build();
 
     }
+
+    @PUT
+    @Path("/{id}")
+    public Response updatePharmacy(@PathParam("id") Long id, Pharmacy pharmacy) {
+        pharmacyService.updatePharmacy(id, pharmacy);
+        return Response.ok().build();
+    }
 }

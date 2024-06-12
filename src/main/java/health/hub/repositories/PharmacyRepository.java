@@ -4,6 +4,7 @@ import health.hub.entities.Pharmacy;
 import jakarta.persistence.*;
 
 import java.util.List;
+import java.util.Optional;
 
 public class PharmacyRepository {
     EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("myUnit");
@@ -15,6 +16,9 @@ public class PharmacyRepository {
         return query.getResultList();
     }
 
+    public Optional<Pharmacy> findById(Long id) {
+        return Optional.ofNullable(entityManager.find(Pharmacy.class, id));
+    }
 
     public Pharmacy add(Pharmacy pharmacy) {
         try {
@@ -26,6 +30,10 @@ public class PharmacyRepository {
             entityManager.getTransaction().rollback();
             throw e;
         }
+    }
+
+    public void update(Pharmacy pharmacy) {
+        entityManager.merge(pharmacy);
     }
 
     public boolean existsByLocation(double longitude, double latitude) {
