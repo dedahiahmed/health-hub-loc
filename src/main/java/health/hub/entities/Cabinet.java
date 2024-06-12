@@ -1,12 +1,12 @@
 package health.hub.entities;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.locationtech.jts.geom.Point;
-
-import java.util.List;
 
 @Entity
 @Data
@@ -18,12 +18,10 @@ public class Cabinet {
     private Long id;
 
     private String nom;
-    private  String willaya;
-    private String Moughataa;
+    private String willaya;
+    private String moughataa;
+    private Double longitude;
+    private Double latitude;
 
-    @Column(unique = true, name = "location", columnDefinition = "geometry(Point,4326)", nullable = false)
-    private Point location;
-
-//    @OneToMany(mappedBy = "cabinet", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<Doctor> doctors;
+    // Constructor, getters, setters, and other annotations can remain unchanged
 }

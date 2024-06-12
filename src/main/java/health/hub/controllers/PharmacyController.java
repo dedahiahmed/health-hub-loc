@@ -1,7 +1,6 @@
 package health.hub.controllers;
 
-import health.hub.requests.PharmacyRequest;
-import health.hub.responses.PharmacyResponse;
+import health.hub.entities.Pharmacy;
 import health.hub.services.PharmacyService;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
@@ -24,14 +23,14 @@ public class PharmacyController {
 
     @GET
     @Path("/all")
-    public List<PharmacyResponse> getAllPharmacies() {
+    public List<Pharmacy> getAllPharmacies() {
         return pharmacyService.getAllPharmacies();
     }
 
     @GET
     public Response getPharmacies() {
         try {
-            List<PharmacyResponse> pharmacies = pharmacyService.Listepharmacie();
+            List<Pharmacy> pharmacies = pharmacyService.Listepharmacie();
             return Response.ok(pharmacies).build();
         } catch (Exception e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
@@ -58,16 +57,15 @@ public class PharmacyController {
     }
 
     @POST
-    public Response addPharmacy(@Valid PharmacyRequest request) {
+    public Response addPharmacy(@Valid Pharmacy request) {
         pharmacyService.addPharmacy(request);
-        return Response.ok("Pharmacy added successfully").build();
+        return Response.ok().build();
     }
 
     @GET
     @Path("/{id}")
     public Response getPharmacyById(@PathParam("id") Long id) {
-        PharmacyResponse pharmacyResponse = pharmacyService.getPharmacyById(id);
-
+        Pharmacy pharmacyResponse = pharmacyService.getPharmacyById(id);
         return Response.ok(pharmacyResponse).build();
 
     }
