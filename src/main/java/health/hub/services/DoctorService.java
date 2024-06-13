@@ -1,8 +1,10 @@
 package health.hub.services;
 
 import health.hub.entities.Doctor;
+import health.hub.entities.User;
 import health.hub.repositories.DoctorRepository;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import jakarta.ws.rs.NotFoundException;
 
 import java.util.List;
@@ -35,6 +37,19 @@ public class DoctorService {
         return doctor;
     }
 
+    public Doctor updateDoctor(Long id, Doctor doctorDetails) {
+        Doctor existingDoctor = doctorRepository.getDoctor(id);
+        if (existingDoctor == null) {
+            throw new NotFoundException("Doctor not found with id " + id);
+        }
+
+        existingDoctor.setName(doctorDetails.getName());
+        existingDoctor.setSpeciality(doctorDetails.getSpeciality());
+        existingDoctor.setSchedule(doctorDetails.getSchedule());
+        existingDoctor.setCabinet(doctorDetails.getCabinet());
+
+        return doctorRepository.update(existingDoctor);
+    }
     public void deleteDoctorById(Long id) {
         Doctor doctor = doctorRepository.getDoctor(id);
         if (doctor == null) {

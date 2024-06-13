@@ -1,6 +1,7 @@
 package health.hub.controllers;
 
 import health.hub.entities.Doctor;
+import health.hub.entities.User;
 import health.hub.services.DoctorService;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
@@ -32,6 +33,20 @@ public class DoctorController {
     public Response getDoctorById(@PathParam("id") Long id) {
         Doctor doctor = doctorService.getDoctorById(id);
         return Response.ok(doctor).build();
+    }
+
+    @PUT
+    @Path("/{id}")
+    public Response updateDoctor(@PathParam("id") Long id, Doctor doctorDetails) {
+
+        try {
+            Doctor updatedDoctor = doctorService.updateDoctor(id, doctorDetails);
+            return Response.ok(updatedDoctor).build();
+        } catch (IllegalArgumentException e) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @DELETE
