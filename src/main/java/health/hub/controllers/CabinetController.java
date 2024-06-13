@@ -46,4 +46,9 @@ public class CabinetController {
         return Response.noContent().build();
     }
 
+    @PATCH
+    @Path("/{id}")
+    public Response updatePharmacy(@PathParam("id") Long id, Cabinet cabinet) {
+        return Response.ok(cabinetService.updateCabinet(id, cabinet)).build();
+    }
 }

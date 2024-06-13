@@ -102,10 +102,10 @@
 package health.hub.repositories;
 
 import health.hub.entities.Cabinet;
-import health.hub.entities.Doctor;
 import jakarta.persistence.*;
 
 import java.util.List;
+import java.util.Optional;
 
 public class CabinetRepository {
     EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("myUnit");
@@ -146,6 +146,17 @@ public class CabinetRepository {
         return count != 0;
     }
 
+    public Optional<Cabinet> findById(Long id) {
+        return Optional.ofNullable(entityManager.find(Cabinet.class, id));
+    }
+
+    public Cabinet update(Cabinet cabinet) {
+        entityManager.getTransaction().begin();
+        Cabinet updatedCabinet = entityManager.merge(cabinet);
+        entityManager.getTransaction().commit();
+        return updatedCabinet;
+    }
+
     public void delete(Cabinet cabinet) {
         try {
             entityManager.getTransaction().begin();
@@ -160,8 +171,6 @@ public class CabinetRepository {
     public Cabinet getCabinet(Long id) {
         return entityManager.find(Cabinet.class, id);
     }
-
-
 
 
 }

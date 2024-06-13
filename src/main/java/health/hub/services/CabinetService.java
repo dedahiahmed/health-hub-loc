@@ -90,6 +90,7 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.NotFoundException;
 
 import java.util.List;
+import java.util.Optional;
 
 public class CabinetService {
     @Inject
@@ -129,6 +130,28 @@ public class CabinetService {
         cabinetRepository.delete(cabinet);
     }
 
+    public Cabinet updateCabinet(Long id, Cabinet cabinet) {
+        Optional<Cabinet> existingCabinetOptional = cabinetRepository.findById(id);
+        if (existingCabinetOptional.isPresent()) {
+            Cabinet existingCabinet = existingCabinetOptional.get();
+            if (cabinet.getNom() != null) {
+                existingCabinet.setNom(cabinet.getNom());
+            }
+            if (cabinet.getWillaya() != null) {
+                existingCabinet.setWillaya(cabinet.getWillaya());
+            }
+            if (cabinet.getMoughataa() != null) {
+                existingCabinet.setMoughataa(cabinet.getMoughataa());
+            }
+            if (cabinet.getDoctors() != null) {
+                existingCabinet.setDoctors(cabinet.getDoctors());
+            }
+
+            return cabinetRepository.update(existingCabinet);
+        } else {
+            throw new IllegalArgumentException("Cabinet with ID " + id + " not found");
+        }
+    }
 
 
 }
