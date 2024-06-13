@@ -102,6 +102,7 @@
 package health.hub.repositories;
 
 import health.hub.entities.Cabinet;
+import health.hub.entities.Doctor;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -159,4 +160,8 @@ public class CabinetRepository {
     public Cabinet getCabinet(Long id) {
         return entityManager.find(Cabinet.class, id);
     }
+
+
+
+
 }

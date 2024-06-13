@@ -1,14 +1,14 @@
 package health.hub.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.json.bind.annotation.JsonbTransient;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Entity
 @Data
@@ -33,4 +33,8 @@ public class Cabinet {
 
     @NotNull(message = "Latitude cannot be null")
     private Double latitude;
+
+    @OneToMany(mappedBy = "cabinet", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonbTransient
+    private List<Doctor> doctors;
 }

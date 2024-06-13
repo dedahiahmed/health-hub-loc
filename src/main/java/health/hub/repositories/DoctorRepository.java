@@ -1,13 +1,22 @@
 package health.hub.repositories;
 
 import health.hub.entities.Doctor;
-import jakarta.persistence.*;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.NoResultException;
+import jakarta.persistence.Persistence;
+import jakarta.persistence.TypedQuery;
 
 import java.util.List;
 
 public class DoctorRepository {
-    private final EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("myUnit");
-    private final EntityManager entityManager = entityManagerFactory.createEntityManager();
+    private final EntityManagerFactory entityManagerFactory;
+    private final EntityManager entityManager;
+
+    public DoctorRepository() {
+        entityManagerFactory = Persistence.createEntityManagerFactory("myUnit");
+        entityManager = entityManagerFactory.createEntityManager();
+    }
 
     public List<Doctor> getAll() {
         String sql = "SELECT d FROM Doctor d";
@@ -62,5 +71,12 @@ public class DoctorRepository {
             entityManager.getTransaction().rollback();
             throw e;
         }
+    }
+
+    public List<Doctor> getDoctorsByCabinet(Long cabinetId) {
+        String jpql = "SELECT d FROM Doctor d WHERE d.cabinet.id = :cabinetId";
+        TypedQuery<Doctor> query = entityManager.createQuery(jpql, Doctor.class);
+        query.setParameter("cabinetId", cabinetId);
+        return query.getResultList();
     }
 }

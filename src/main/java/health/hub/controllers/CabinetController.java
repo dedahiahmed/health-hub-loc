@@ -32,6 +32,7 @@ public class CabinetController {
         return Response.ok(cabinetResponse).build();
     }
 
+
     @POST
     public Response addCabinet(@Valid Cabinet request) {
         return Response.ok(cabinetService.addCabinet(request)).build();

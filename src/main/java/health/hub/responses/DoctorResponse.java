@@ -1,6 +1,6 @@
 package health.hub.responses;
 
-import jdk.jshell.Snippet;
+
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;

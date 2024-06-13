@@ -1,7 +1,6 @@
 package health.hub.controllers;
 
-import health.hub.requests.DoctorRequest;
-import health.hub.responses.DoctorResponse;
+import health.hub.entities.Doctor;
 import health.hub.services.DoctorService;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
@@ -18,21 +17,21 @@ public class DoctorController {
     DoctorService doctorService;
 
     @GET
-    public List<DoctorResponse> getAllDoctors() {
+    public List<Doctor> getAllDoctors() {
         return doctorService.getAllDoctors();
     }
 
     @POST
-    public Response addDoctor(@Valid DoctorRequest request) {
-        doctorService.addDoctor(request);
+    public Response addDoctor(@Valid Doctor doctor) {
+        doctorService.addDoctor(doctor);
         return Response.ok("Doctor added successfully").build();
     }
 
     @GET
     @Path("/{id}")
     public Response getDoctorById(@PathParam("id") Long id) {
-        DoctorResponse doctorResponse = doctorService.getDoctorById(id);
-        return Response.ok(doctorResponse).build();
+        Doctor doctor = doctorService.getDoctorById(id);
+        return Response.ok(doctor).build();
     }
 
     @DELETE
@@ -40,5 +39,11 @@ public class DoctorController {
     public Response deleteDoctorById(@PathParam("id") Long id) {
         doctorService.deleteDoctorById(id);
         return Response.ok().build();
+    }
+
+    @GET
+    @Path("{id}/doctorsbycabinet")
+    public List<Doctor> getDoctorsByCabinet(@PathParam("id") Long id) {
+        return doctorService.getDoctorsByCabinet(id);
     }
 }
