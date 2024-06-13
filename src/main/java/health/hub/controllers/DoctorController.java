@@ -1,7 +1,6 @@
 package health.hub.controllers;
 
 import health.hub.entities.Doctor;
-import health.hub.entities.User;
 import health.hub.services.DoctorService;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
@@ -10,6 +9,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 import java.util.List;
+
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @Path("/doctors")
@@ -35,7 +35,7 @@ public class DoctorController {
         return Response.ok(doctor).build();
     }
 
-    @PUT
+    @PATCH
     @Path("/{id}")
     public Response updateDoctor(@PathParam("id") Long id, Doctor doctorDetails) {
 
