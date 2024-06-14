@@ -16,6 +16,8 @@ import java.util.List;
 public class CabinetController {
 
     @Inject
+
+            
     CabinetService cabinetService;
 
 
