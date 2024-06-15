@@ -1,5 +1,7 @@
 package health.hub.entities;
 
+import health.hub.Enums.Moughataa;
+import health.hub.Enums.Wilaya;
 import jakarta.json.bind.annotation.JsonbTransient;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -21,12 +23,16 @@ public class Cabinet {
 
     @NotBlank(message = "Nom cannot be null or empty")
     private String nom;
+    @Enumerated(EnumType.STRING)
+    @NotNull(message = "Willaya cannot be null")
+    @Column(nullable = false)
+    private Wilaya willaya;
 
-    @NotBlank(message = "Willaya cannot be null or empty")
-    private String willaya;
-
-    @NotBlank(message = "Moughataa cannot be null or empty")
-    private String moughataa;
+    @NotNull(message = "Moughataa cannot be null")
+    @Basic
+    @Enumerated(EnumType.STRING)
+    @Column(name = "moughataa", nullable = false)
+    private Moughataa moughataa;
 
     @NotNull(message = "Longitude cannot be null")
     private Double longitude;

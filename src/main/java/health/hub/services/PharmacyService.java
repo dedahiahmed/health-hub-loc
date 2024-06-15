@@ -69,10 +69,10 @@ public class PharmacyService {
                 existingPharmacy.setName(pharmacy.getName());
             }
             if (pharmacy.getWillaya() != null) {
-                existingPharmacy.setWillaya(pharmacy.getWillaya());
+                existingPharmacy.setWillaya(String.valueOf(pharmacy.getWillaya()));
             }
             if (pharmacy.getMoughataa() != null) {
-                existingPharmacy.setMoughataa(pharmacy.getMoughataa());
+                existingPharmacy.setMoughataa(String.valueOf(pharmacy.getMoughataa()));
             }
             if (pharmacy.getImg() != null) {
                 existingPharmacy.setImg(pharmacy.getImg());

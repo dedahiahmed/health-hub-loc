@@ -1,5 +1,6 @@
 package health.hub.entities;
 
+import health.hub.Enums.Role;
 import health.hub.services.PasswordService;
 import jakarta.persistence.*;
 import lombok.*;

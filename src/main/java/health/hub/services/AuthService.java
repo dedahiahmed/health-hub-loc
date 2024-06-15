@@ -16,6 +16,8 @@ public class AuthService {
 
     public static final String SECRET_KEY = "6E3272357538782F413F4428472B4B6250655367566B59703373367639792442";
     private static final long TOKEN_EXPIRATION_TIME = 3600000; // 1 heure en millisecondes
+    @Inject
+    UserRepository userRepository;
 
     public String generateToken(User user) {
         Date expirationDate = new Date(System.currentTimeMillis() + TOKEN_EXPIRATION_TIME);
@@ -23,6 +25,7 @@ public class AuthService {
         return Jwts.builder()
                 .setSubject(user.getUsername())
                 .setIssuedAt(new Date())
+                .claim("role", user.getRole())
                 .setExpiration(expirationDate)
                 .signWith(getSignKey(), SignatureAlgorithm.HS256)
                 .compact();
@@ -50,8 +53,6 @@ public class AuthService {
         }
     }
 
-    @Inject
-    UserRepository userRepository;
 
     public String authenticate(String username, String password) {
         User user = userRepository.findByUsername(username);
@@ -60,5 +61,19 @@ public class AuthService {
         }
 
         return null;
+    }
+
+    public static Claims getClaimsFromToken(String token) {
+        Key key = Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
+        try {
+            return Jwts.parserBuilder()
+                    .setSigningKey(key)
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+        } catch (Exception e) {
+            System.out.println("Invalid token");
+            return null;
+        }
     }
 }

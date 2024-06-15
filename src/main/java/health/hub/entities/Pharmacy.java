@@ -1,5 +1,8 @@
 package health.hub.entities;
 
+import health.hub.Enums.Moughataa;
+import health.hub.Enums.Wilaya;
+import health.hub.exceptions.InvalidEnumValueException;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -19,7 +22,7 @@ public class Pharmacy {
     private Long id;
 
     @NotBlank(message = "name cannot be null or empty")
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     private String name;
 
     @NotNull(message = "longitude cannot be null")
@@ -30,13 +33,16 @@ public class Pharmacy {
     @Column(nullable = false)
     private double latitude;
 
-    @NotBlank(message = "willaya cannot be null or empty")
+    @Enumerated(EnumType.STRING)
+    @NotNull(message = "Willaya cannot be null")
     @Column(nullable = false)
-    private String willaya;
+    private Wilaya willaya;
 
-    @NotBlank(message = "moughataa cannot be null or empty")
-    @Column(nullable = false)
-    private String moughataa;
+    @NotNull(message = "Moughataa cannot be null")
+    @Basic
+    @Enumerated(EnumType.STRING)
+    @Column(name = "moughataa", nullable = false)
+    private Moughataa moughataa;
 
     // @NotBlank(message = "image cannot be null or empty")
     // @Column(nullable = false)
@@ -44,4 +50,21 @@ public class Pharmacy {
 
     @Column(name = "is_open_tonight")
     private boolean isOpenTonight;
+
+    public void setWillaya(String willaya) {
+        try {
+            this.willaya = Wilaya.valueOf(willaya.replaceAll("-", "_"));
+        } catch (IllegalArgumentException ex) {
+            throw new InvalidEnumValueException("Wilaya", willaya);
+        }
+    }
+
+    // Setter for Moughataa enum with validation
+    public void setMoughataa(String moughataa) {
+        try {
+            this.moughataa = Moughataa.valueOf(moughataa.replaceAll("-", "_"));
+        } catch (IllegalArgumentException ex) {
+            throw new InvalidEnumValueException("Moughataa", moughataa);
+        }
+    }
 }
