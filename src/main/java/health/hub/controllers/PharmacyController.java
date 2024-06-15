@@ -39,7 +39,7 @@ public class PharmacyController {
         }
     }
 
-    @PUT
+    @PATCH
     @Path("/isOpenTonight")
     public Response updateIsOpenTonight(List<Map<String, Object>> updates) {
         try {

@@ -1,5 +1,6 @@
 package health.hub.entities;
 
+import health.hub.Enums.Speciality;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -18,10 +19,12 @@ public class Doctor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank
+    @NotBlank(message = "speciality cannot be null or empty")
     private String name;
-    @NotBlank
-    private String speciality;
+    @NotNull(message = "speciality cannot be null")
+    @Basic
+    @Enumerated(EnumType.STRING)
+    private Speciality speciality;
 
     @ElementCollection
     @CollectionTable(name = "schedule", joinColumns = @JoinColumn(name = "doctor_id"))

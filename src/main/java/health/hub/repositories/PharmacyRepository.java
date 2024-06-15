@@ -91,6 +91,7 @@ public class PharmacyRepository {
             query.setParameter(2, id);
 
             int updatedRows = query.executeUpdate();
+            
             entityManager.getTransaction().commit();
 
             if (updatedRows == 0) {
