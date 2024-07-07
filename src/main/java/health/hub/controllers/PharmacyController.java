@@ -22,22 +22,22 @@ public class PharmacyController {
 
 
     @GET
-    @Path("/all")
+    //@Path("/all")
     public List<Pharmacy> getAllPharmacies() {
         return pharmacyService.getAllPharmacies();
     }
 
-    @GET
-    public Response getPharmacies() {
-        try {
-            List<Pharmacy> pharmacies = pharmacyService.Listepharmacie();
-            return Response.ok(pharmacies).build();
-        } catch (Exception e) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                    .entity("An error occurred while fetching pharmacies")
-                    .build();
-        }
-    }
+//    @GET
+//    public Response getPharmacies() {
+//        try {
+//            List<Pharmacy> pharmacies = pharmacyService.Listepharmacie();
+//            return Response.ok(pharmacies).build();
+//        } catch (Exception e) {
+//            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+//                    .entity("An error occurred while fetching pharmacies")
+//                    .build();
+//        }
+//    }
 
     @PATCH
     @Path("/isOpenTonight")
